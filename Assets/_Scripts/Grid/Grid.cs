@@ -4,6 +4,7 @@ namespace edw.Grids
     public class Grid<T>
     {
         GridOptions gridOptions;
+        
         T[,] gridArray;
 
         public Grid(GridOptions gridOptions)
@@ -26,7 +27,7 @@ namespace edw.Grids
 
         private Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(x, 0, y) * gridOptions.cellSize; // change 0 to custom when offset is made
+            return new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset; // change 0 to custom when offset is made
         }
 
         public void SetValue(int x, int y, T value)

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GridLogic : MonoBehaviour
 {
-    edw.Grids.Grid<GridElement> grid;
-    GridOptions gridOptions = new GridOptions(5, 5, 2);
+    Grid<GridElement> grid;
+    GridOptions gridOptions;
 
     void Start()
     {
@@ -14,7 +14,8 @@ public class GridLogic : MonoBehaviour
 
     private void InitGrid()
     {
-        grid = new edw.Grids.Grid<GridElement>(gridOptions);
+        gridOptions = new GridOptions(5, 5, 2, transform.position);
+        grid = new Grid<GridElement>(gridOptions);
         GridElement defaultGridElement = new GridElement(GridElementType.Default, GridOccupier.None);
         InitialiseGridElements();
     }
