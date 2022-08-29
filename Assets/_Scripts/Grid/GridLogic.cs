@@ -16,9 +16,20 @@ public class GridLogic : MonoBehaviour
     {
         grid = new edw.Grids.Grid<GridElement>(gridOptions);
         GridElement defaultGridElement = new GridElement(GridElementType.Default, GridOccupier.None);
-        grid.SetAllGridElements(defaultGridElement);
+        InitialiseGridElements();
     }
 
+    private void InitialiseGridElements(GridElementType type = GridElementType.Default, GridOccupier occupier = GridOccupier.None)
+    {
+        for (int x = 0; x < gridOptions.width; x++)
+        {
+            for (int y = 0; y < gridOptions.height; y++)
+            {
+                GridElement gridElement = new GridElement(type, occupier);
+                grid.SetValue(x, y, gridElement);
+            }
+        }
+    }
     private void SetEdgesPlayerExclusive()
     {
         for (int x = 0; x < gridOptions.width; x++)
