@@ -27,7 +27,7 @@ namespace edw.Grids
 
         public Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset; // change 0 to custom when offset is made
+            return new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset;
         }
 
         public void SetValue(int x, int y, T value)

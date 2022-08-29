@@ -12,6 +12,8 @@ public class GridLogic : MonoBehaviour
         SetEdgesPlayerExclusive();
     }
 
+    #region Grid Setup
+
     private void InitGrid()
     {
         gridOptions = new GridOptions(5, 5, 2, transform.position);
@@ -31,6 +33,7 @@ public class GridLogic : MonoBehaviour
             }
         }
     }
+
     private void SetEdgesPlayerExclusive()
     {
         for (int x = 0; x < gridOptions.width; x++)
@@ -63,4 +66,12 @@ public class GridLogic : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Game Logic
+
+    
+
+    #endregion
 }

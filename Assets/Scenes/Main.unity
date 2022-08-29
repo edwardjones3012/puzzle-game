@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 473061790}
   - component: {fileID: 473061789}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Grid Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 920268729}
   - component: {fileID: 920268730}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -938,7 +938,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412366025}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Grid Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
