@@ -3,10 +3,10 @@ namespace edw.Grid
 {
     public class Grid<T>
     {
-        private int width;
-        private int height;
-        private int cellSize;
-        private T[,] gridArray;
+        int width;
+        int height;
+        int cellSize;
+        T[,] gridArray;
         public Grid(int width, int height, int cellSize)
         {
             this.width = width;
@@ -19,7 +19,6 @@ namespace edw.Grid
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
-                    Debug.Log(x + ", " + y + GetWorldPosition(x, y));
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.cyan, 100000);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.cyan, 100000);
                 }
