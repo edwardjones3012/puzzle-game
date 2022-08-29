@@ -25,7 +25,7 @@ namespace edw.Grids
             Debug.DrawLine(GetWorldPosition(gridOptions.width, 0), GetWorldPosition(gridOptions.width, gridOptions.height), Color.cyan, 100000);
         }
 
-        private Vector3 GetWorldPosition(int x, int y)
+        public Vector3 GetWorldPosition(int x, int y)
         {
             return new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset; // change 0 to custom when offset is made
         }

@@ -37,12 +37,15 @@ public class GridLogic : MonoBehaviour
         {
             for (int y = 0; y < gridOptions.height; y++)
             {
-                if (x == 0)
+                if (x == 0 || y == 0 || x == gridOptions.width - 1 || y == gridOptions.height - 1)
                 {
                     GridElement currentGridElement = grid.GetValue(x, y);
                     currentGridElement.GridElementType = GridElementType.PlayerExclusive;
                     grid.SetValue(x, y, currentGridElement);
-                    Debug.Log(grid.GetValue(x, y).GridElementType);
+                    // Debug.Log(x + ", " + y);
+                    // Vector3 halfCell = new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2;
+                    // Debug.DrawLine(grid.GetWorldPosition(x, y) + halfCell, grid.GetWorldPosition(x, y) + halfCell + Vector3.up * 10, Color.white, 10000);
+                    // Debug.Log(grid.GetValue(x, y).GridElementType);
                 }
             }
         }
