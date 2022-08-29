@@ -29,9 +29,9 @@ Material:
     - _LightIntensity: 13
     - _Rows: 5
     m_Floats:
-    - _Columns: 5
+    - _Columns: 11
     - _LightIntensity: 2.43
-    - _Rows: 5
+    - _Rows: 11
     m_Colors:
     - _Color: {r: 1, g: 0.94228107, b: 0.8349056, a: 1}
   m_BuildTextureStacks: []
