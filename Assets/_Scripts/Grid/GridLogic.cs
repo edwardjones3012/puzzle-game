@@ -1,9 +1,9 @@
-using edw.Grid;
+using edw.Grids;
 using UnityEngine;
 
 public class GridLogic : MonoBehaviour
 {
-    Grid<GridElement> grid;
+    edw.Grids.Grid<GridElement> grid;
     GridOptions gridOptions = new GridOptions(5, 5, 2);
 
     void Start()
@@ -14,7 +14,7 @@ public class GridLogic : MonoBehaviour
 
     private void InitGrid()
     {
-        grid = new Grid<GridElement>(gridOptions);
+        grid = new edw.Grids.Grid<GridElement>(gridOptions);
         GridElement defaultGridElement = new GridElement(GridElementType.Default, GridOccupier.None);
         grid.SetAllGridElements(defaultGridElement);
     }

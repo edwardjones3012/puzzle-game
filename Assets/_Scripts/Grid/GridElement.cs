@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace edw.Grid
+namespace edw.Grids
 {
-    public class GridElement
+    public struct GridElement
     {
         public GridElementType GridElementType;
         public GridOccupier Occupier;

@@ -1,4 +1,4 @@
-namespace edw.Grid
+namespace edw.Grids
 {
     public enum GridOccupier
     {

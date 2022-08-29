@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace edw.Grid
+namespace edw.Grids
 {
     public class Grid<T>
     {
