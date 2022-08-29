@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public struct GridOptions 
 {
     public int width;

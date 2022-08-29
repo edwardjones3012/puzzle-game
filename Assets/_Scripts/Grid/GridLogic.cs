@@ -5,10 +5,9 @@ using UnityEngine;
 public class GridLogic : MonoBehaviour
 {
     Grid<GridElement> grid;
-    GridOptions gridOptions;
+    [SerializeField] GridOptions gridOptions;
 
-    Vector2 playerPos;
-    Vector2 playerStartingPos = new Vector2(1, 0);
+    Vector2 playerPos = new Vector2(1, 0);
 
     void Start()
     {
@@ -18,14 +17,21 @@ public class GridLogic : MonoBehaviour
 
     #region Grid Setup
 
+    /// <summary>
+    /// Creates a new grid and initialises it's elements.
+    /// </summary>
     private void InitGrid()
     {
-        gridOptions = new GridOptions(5, 5, 2, transform.position);
+        // gridOptions = new GridOptions(5, 5, 2, transform.position);
         grid = new Grid<GridElement>(gridOptions);
-        GridElement defaultGridElement = new GridElement(GridElementType.Default, GridOccupier.None);
         InitialiseGridElements();
     }
 
+    /// <summary>
+    /// Sets the value of each grid tile to a GridElement.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="occupier"></param>
     private void InitialiseGridElements(GridElementType type = GridElementType.Default, GridOccupier occupier = GridOccupier.None)
     {
         for (int x = 0; x < gridOptions.width; x++)
@@ -38,6 +44,9 @@ public class GridLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets each Grid Tile GridElement located on an edge of the grid to be player exclusive.
+    /// </summary>
     private void SetGridEdgesPlayerExclusive()
     {
         for (int x = 0; x < gridOptions.width; x++)
@@ -85,6 +94,11 @@ public class GridLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the position of the first tile that has a specified GridElement as it's value.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public Vector2? GetPosition(GridElement value)
     {
         for (int x = 0; x < gridOptions.width; x++)
@@ -103,7 +117,7 @@ public class GridLogic : MonoBehaviour
 
     #endregion
 
-    #region Game Logic
+    #region Player Movement
 
     private void Update()
     {
@@ -111,7 +125,6 @@ public class GridLogic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A)) TryMove(MoveDirection.Left);
         if (Input.GetKeyDown(KeyCode.S)) TryMove(MoveDirection.Down);
         if (Input.GetKeyDown(KeyCode.D)) TryMove(MoveDirection.Right);
-
     }
 
     private void TryMove(MoveDirection moveDir)
