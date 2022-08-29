@@ -3,17 +3,14 @@ namespace edw.Grid
 {
     public class Grid<T>
     {
-        int width;
-        int height;
-        int cellSize;
+        GridOptions gridOptions;
         T[,] gridArray;
-        public Grid(int width, int height, int cellSize)
-        {
-            this.width = width;
-            this.height = height;
-            this.cellSize = cellSize;
 
-            gridArray = new T[width, height];
+        public Grid(GridOptions gridOptions)
+        {
+            this.gridOptions = gridOptions;
+
+            gridArray = new T[gridOptions.width, gridOptions.height];
 
             for (int x = 0; x < gridArray.GetLength(0); x++)
             {
@@ -23,31 +20,41 @@ namespace edw.Grid
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.cyan, 100000);
                 }
             }
-            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.cyan, 100000);
-            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.cyan, 100000);
+            Debug.DrawLine(GetWorldPosition(0, gridOptions.height), GetWorldPosition(gridOptions.width, gridOptions.height), Color.cyan, 100000);
+            Debug.DrawLine(GetWorldPosition(gridOptions.width, 0), GetWorldPosition(gridOptions.width, gridOptions.height), Color.cyan, 100000);
         }
 
         private Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(x, 0, y) * cellSize;
+            return new Vector3(x, 0, y) * gridOptions.cellSize; // change 0 to custom when offset is made
         }
 
         public void SetValue(int x, int y, T value)
         {
-            if (x >= 0 && y >= 0 && x < width && y < height)
+            if (x >= 0 && y >= 0 && x < gridOptions.width && y < gridOptions.height)
             {
                 gridArray[x, y] = value;
-                Debug.Log(gridArray[x, y]);
             }
         }
 
         public T GetValue(int x, int y)
         {
-            if (x >= 0 && y >= 0 && x < width && y < height)
+            if (x >= 0 && y >= 0 && x < gridOptions.width && y < gridOptions.height)
             {
                 return gridArray[x, y];
             }
             return default(T);
+        }
+
+        public void SetAllGridElements(T value)
+        {
+            for (int x = 0; x < gridArray.GetLength(0); x++)
+            {
+                for (int y = 0; y < gridArray.GetLength(1); y++)
+                {
+                    SetValue(x,y, value);
+                }
+            }
         }
     }
 }

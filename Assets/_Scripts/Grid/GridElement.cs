@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace edw.Grid
 {
-    public class GridElement : MonoBehaviour
+    public class GridElement
     {
         public GridElementType GridElementType;
         public GridOccupier Occupier;
