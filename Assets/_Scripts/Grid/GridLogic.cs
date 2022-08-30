@@ -1,4 +1,5 @@
 using edw.Grids;
+using edw.Grids.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,13 @@ public class GridLogic : MonoBehaviour
 
     Vector2 playerPos = new Vector2(1, 0);
 
+    List<Pillar> activePillars = new List<Pillar>();
+
     void Start()
     {
         InitGrid();
         SetGridEdgesPlayerExclusive();
+        RegisterPillars();
     }
 
     #region Grid Setup
@@ -86,9 +90,17 @@ public class GridLogic : MonoBehaviour
         {
             for (int y = 0; y < gridOptions.height; y++)
             {
-                if (grid.GetValue(x, y).Occupier != GridOccupier.None)
+                //if (grid.GetValue(x, y).Occupier != GridOccupier.None)
+                //{
+                //    Debug.DrawLine(grid.GetWorldPosition(x, y), grid.GetWorldPosition(x, y) + Vector3.up * 10, Color.blue, 2);
+                //}
+                if (grid.GetValue(x, y).Occupier == GridOccupier.Pillar)
                 {
                     Debug.DrawLine(grid.GetWorldPosition(x, y), grid.GetWorldPosition(x, y) + Vector3.up * 10, Color.blue, 2);
+                }
+                if (grid.GetValue(x, y).Occupier == GridOccupier.Player)
+                {
+                    Debug.DrawLine(grid.GetWorldPosition(x, y), grid.GetWorldPosition(x, y) + Vector3.up * 10, Color.red, 2);
                 }
             }
         }
@@ -144,7 +156,6 @@ public class GridLogic : MonoBehaviour
 
     private void MovePlayer(GridElement destination)
     {
-        // this might not work. might need to make new grid element and setvalue()
         grid.GetValue((int)playerPos.x, (int)playerPos.y).Occupier = GridOccupier.None;
         destination.Occupier = GridOccupier.Player;
         Vector2? destPos = GetPosition(destination);
@@ -219,5 +230,26 @@ public class GridLogic : MonoBehaviour
         return element != null;
     }
 
+    #endregion
+    #region Pillars
+
+    void RegisterPillars()
+    {
+        // to do: get positions dynamically
+
+        Pillar p1 = new Pillar(new Vector2(1, 3), PillarType.Red);
+        Pillar p2 = new Pillar(new Vector2(2, 1), PillarType.Green);
+        Pillar p3 = new Pillar(new Vector2(2, 2), PillarType.Blue);
+
+        activePillars.Add(p1);
+        activePillars.Add(p2);
+        activePillars.Add(p3);
+
+        foreach(Pillar pillar in activePillars)
+        {
+            GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
+            elementAtPos.Occupier = GridOccupier.Pillar;
+        }
+    }
     #endregion
 }
