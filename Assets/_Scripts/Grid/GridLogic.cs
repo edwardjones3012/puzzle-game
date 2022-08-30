@@ -1,6 +1,7 @@
 using edw.Grids;
 using edw.Grids.Items;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridLogic : MonoBehaviour
@@ -145,11 +146,13 @@ public class GridLogic : MonoBehaviour
         if (elementsInDir.Count > 0)
         {
             GridElement lastElement = elementsInDir[elementsInDir.Count - 1];
+            GridElement firstElement = elementsInDir[0];
 
             if (lastElement.Occupier == GridOccupier.None)
             {
-                
-                MovePlayer(lastElement);
+                List<GridElement> elementsToShift = elementsInDir.Where(x => x.Occupier != GridOccupier.None).ToList();
+                ShiftElements(elementsToShift, moveDir);
+                MovePlayer(firstElement);
                 DebugOccupiedGridElements();
             }
         }
@@ -166,14 +169,32 @@ public class GridLogic : MonoBehaviour
         }
     }
 
-    void ShiftAllElements(MoveDirection moveDir)
+    void ShiftElements(List<GridElement> elements, MoveDirection moveDir)
     {
-
+        for (int i = elements.Count - 1; i >= 0; i--)
+        {
+            ShiftElement(elements[i], GetDirectionAsVector2(moveDir));
+        }
     }
 
     void ShiftElement(GridElement element, Vector2 dir)
     {
+        Vector2 currentPos;
 
+        currentPos = (Vector2)GetPosition(element);
+        if (currentPos == null) Debug.LogError("GetPosition returned null!");
+
+        Vector2 targetPos = currentPos + dir;
+        GridElement targetElement = grid.GetValue((int)targetPos.x, (int)targetPos.y);
+        if (targetElement == null) Debug.LogError("ShiftElement received invalid target!");
+        targetElement.Occupier = element.Occupier;
+
+        if (element.Occupier == GridOccupier.Player)
+        {
+            playerPos = targetPos;
+        }
+
+        element.Occupier = GridOccupier.None;
     }
 
     private List<GridElement> GetAllGridElementsUntilUnoccupied(MoveDirection moveDir, Vector2 start)
