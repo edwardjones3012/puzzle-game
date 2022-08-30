@@ -148,6 +148,7 @@ public class GridLogic : MonoBehaviour
 
             if (lastElement.Occupier == GridOccupier.None)
             {
+                
                 MovePlayer(lastElement);
                 DebugOccupiedGridElements();
             }
@@ -165,33 +166,22 @@ public class GridLogic : MonoBehaviour
         }
     }
 
+    void ShiftAllElements(MoveDirection moveDir)
+    {
+
+    }
+
+    void ShiftElement(GridElement element, Vector2 dir)
+    {
+
+    }
+
     private List<GridElement> GetAllGridElementsUntilUnoccupied(MoveDirection moveDir, Vector2 start)
     {
         List<GridElement> elements = new List<GridElement>();
 
-        int loopLimit = 0;
-        Vector2 dir = Vector2.zero;
-
-        if (moveDir == MoveDirection.Up)
-        {
-            loopLimit = gridOptions.height - (int)start.y;
-            dir = new Vector2(0, 1);
-        }
-        if (moveDir == MoveDirection.Down)
-        {
-            loopLimit = (int)start.y;
-            dir = new Vector2(0, -1);
-        }
-        if (moveDir == MoveDirection.Left)
-        {
-            loopLimit = (int)start.x;
-            dir = new Vector2(-1, 0);
-        }
-        if (moveDir == MoveDirection.Right)
-        {
-            loopLimit = gridOptions.width - (int)start.x;
-            dir = new Vector2(1, 0);
-        }
+        int loopLimit = GetLoopLimit(moveDir, start);
+        Vector2 dir = GetDirectionAsVector2(moveDir);
 
         for (int i = 0; i < loopLimit; i++)
         {
@@ -212,10 +202,53 @@ public class GridLogic : MonoBehaviour
             {
                 // not necessarily reached the end
                 elements.Add(element);
+                dir += GetDirectionAsVector2(moveDir);
             }
         }
 
         return elements;
+    }
+
+    private Vector2 GetDirectionAsVector2(MoveDirection moveDir)
+    {
+        if (moveDir == MoveDirection.Up)
+        {
+            return new Vector2(0, 1);
+        }
+        if (moveDir == MoveDirection.Down)
+        {
+            return new Vector2(0, -1);
+        }
+        if (moveDir == MoveDirection.Left)
+        {
+            return new Vector2(-1, 0);
+        }
+        if (moveDir == MoveDirection.Right)
+        {
+            return new Vector2(1, 0);
+        }
+        return Vector2.zero;
+    }
+
+    private int GetLoopLimit(MoveDirection moveDir, Vector2 start)
+    {
+        if (moveDir == MoveDirection.Up)
+        {
+            return gridOptions.height - (int)start.y;
+        }
+        if (moveDir == MoveDirection.Down)
+        {
+            return (int)start.y;
+        }
+        if (moveDir == MoveDirection.Left)
+        {
+            return (int)start.x;
+        }
+        if (moveDir == MoveDirection.Right)
+        {
+            return gridOptions.width - (int)start.x;
+        }
+        return -1;
     }
 
     private GridElement GetNextGridElement(Vector2 dir, Vector2 start)
