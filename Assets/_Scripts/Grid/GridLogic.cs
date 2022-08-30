@@ -97,11 +97,11 @@ public class GridLogic : MonoBehaviour
                 //}
                 if (grid.GetValue(x, y).Occupier == GridOccupier.Pillar)
                 {
-                    Debug.DrawLine(grid.GetWorldPosition(x, y), grid.GetWorldPosition(x, y) + Vector3.up * 10, Color.blue, 2);
+                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize,0,gridOptions.cellSize) /2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.blue, 2);
                 }
                 if (grid.GetValue(x, y).Occupier == GridOccupier.Player)
                 {
-                    Debug.DrawLine(grid.GetWorldPosition(x, y), grid.GetWorldPosition(x, y) + Vector3.up * 10, Color.red, 2);
+                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.red, 2);
                 }
             }
         }
@@ -148,10 +148,15 @@ public class GridLogic : MonoBehaviour
             GridElement lastElement = elementsInDir[elementsInDir.Count - 1];
             GridElement firstElement = elementsInDir[0];
 
-            if (lastElement.Occupier == GridOccupier.None)
+            if (lastElement.Occupier == GridOccupier.None && lastElement.GridElementType != GridElementType.PlayerExclusive)
             {
                 List<GridElement> elementsToShift = elementsInDir.Where(x => x.Occupier != GridOccupier.None).ToList();
                 ShiftElements(elementsToShift, moveDir);
+                MovePlayer(firstElement);
+                DebugOccupiedGridElements();
+            }
+            else if (lastElement.Occupier == GridOccupier.None && elementsInDir.Count == 1)
+            {
                 MovePlayer(firstElement);
                 DebugOccupiedGridElements();
             }
