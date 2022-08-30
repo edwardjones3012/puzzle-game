@@ -55,9 +55,6 @@ Shader "Unlit/Pseudo-lit"
                 
                 float extraLight = worldNormal.y * _LightIntensity;
                 float light = clamp(_AmbientLight + extraLight, 0, 1);
-                // return light.xxxx;
-
-                // float4 col = float4(0, 1, 0, 1);
                 float4 col = tex2D(_MainTex, i.uv) * _Color;
                 float4 output = float4(col.xyz * light, 1);
                 return output;

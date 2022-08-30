@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pseudo-lit
+  m_Name: Pseudo-lit 1
   m_Shader: {fileID: 4800000, guid: f24b68e9b6f2e30428c3c7f7aea20e9e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -26,7 +26,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AmbientLight: 0.594
+    - _AmbientLight: 0.431
     - _LightIntensity: 1
     m_Colors:
     - _Color: {r: 1, g: 0.4302138, b: 0.362, a: 1}

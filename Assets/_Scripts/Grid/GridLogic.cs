@@ -97,11 +97,11 @@ public class GridLogic : MonoBehaviour
                 //}
                 if (grid.GetValue(x, y).Occupier == GridOccupier.Pillar)
                 {
-                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize,0,gridOptions.cellSize) /2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.blue, 2);
+                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize,0,gridOptions.cellSize) /2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.blue, 1);
                 }
                 if (grid.GetValue(x, y).Occupier == GridOccupier.Player)
                 {
-                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.red, 2);
+                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.red, 1);
                 }
             }
         }
