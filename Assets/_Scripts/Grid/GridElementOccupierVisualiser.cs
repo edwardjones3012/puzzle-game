@@ -7,10 +7,17 @@ namespace edw.Grids.Visuals
 {
     public class GridElementOccupierVisualiser : MonoBehaviour
     {
-        public PillarTypeObject[] referencePillarObjects;
+        [SerializeField]
+        PillarTypeObject[] referencePillarObjects;
 
         private Dictionary<Pillar, GameObject> pillarObjectInstances = new Dictionary<Pillar, GameObject>();
 
+        [SerializeField] 
+        GameObject referencePlayerObject;
+        GameObject playerInstance;
+        bool playerSpawned;
+
+        #region Pillars
         public void VisualisePillar(Pillar pillar, Vector3 spawnPoint)
         {
             Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
@@ -45,8 +52,30 @@ namespace edw.Grids.Visuals
             }
             return null;
         }
-    }
 
+        #endregion
+
+        #region Player
+        public void VisualisePlayer(Vector3 spawnPoint)
+        {
+            if (playerSpawned)
+            {
+                Debug.LogError("Cannot register pillar instance more than once!");
+                return;
+            }
+            playerSpawned = true;
+            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
+            playerInstance = Instantiate(referencePlayerObject, heightAdjusted, Quaternion.identity);
+        }
+
+        public void MovePlayerObject(Vector3 destination)
+        {
+            Vector3 heightAdjusted = new Vector3(destination.x, destination.y + 2.25f, destination.z);
+            playerInstance.transform.position = heightAdjusted;
+        }
+        #endregion
+    }
+    
     [System.Serializable]
     public class PillarTypeObject
     {

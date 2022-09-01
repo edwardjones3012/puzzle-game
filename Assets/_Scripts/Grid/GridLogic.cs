@@ -33,6 +33,7 @@ public class GridLogic : MonoBehaviour
         // gridOptions = new GridOptions(5, 5, 2, transform.position);
         grid = new Grid<GridElement>(gridOptions);
         InitialiseGridElements();
+        InitialisePlayer();
     }
 
     /// <summary>
@@ -75,6 +76,11 @@ public class GridLogic : MonoBehaviour
         }
 
         // DebugAllGridElements();
+    }
+    private void InitialisePlayer()
+    {
+        grid.GetValue((int)playerPos.x, (int)playerPos.y).Occupier = GridOccupier.Player;
+        gridElementOccupierVisualiser.VisualisePlayer(grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
     }
 
     private void DebugAllGridElements()
@@ -175,6 +181,7 @@ public class GridLogic : MonoBehaviour
         {
             playerPos = (Vector2)destPos;
         }
+        gridElementOccupierVisualiser.MovePlayerObject(grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
     }
 
     void ShiftElements(List<GridElement> elements, MoveDirection moveDir)
