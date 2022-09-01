@@ -1,5 +1,6 @@
 using edw.Grids;
 using edw.Grids.Items;
+using edw.Grids.Visuals;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class GridLogic : MonoBehaviour
     Vector2 playerPos = new Vector2(1, 0);
 
     List<Pillar> activePillars = new List<Pillar>();
+
+    [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
 
     void Start()
     {
@@ -71,7 +74,7 @@ public class GridLogic : MonoBehaviour
             }
         }
 
-        DebugAllGridElements();
+        // DebugAllGridElements();
     }
 
     private void DebugAllGridElements()
@@ -192,6 +195,16 @@ public class GridLogic : MonoBehaviour
         Vector2 targetPos = currentPos + dir;
         GridElement targetElement = grid.GetValue((int)targetPos.x, (int)targetPos.y);
         if (targetElement == null) Debug.LogError("ShiftElement received invalid target!");
+
+        if (element.Occupier == GridOccupier.Pillar)
+        {
+            if (TryGetPillar(currentPos, out Pillar pillar))
+            {
+                gridElementOccupierVisualiser.MovePillar(pillar, grid.GetWorldPositionCentreGrid((int)targetPos.x, (int)targetPos.y));
+                pillar.Position = targetPos;
+            }
+        }
+
         targetElement.Occupier = element.Occupier;
 
         if (element.Occupier == GridOccupier.Player)
@@ -308,7 +321,22 @@ public class GridLogic : MonoBehaviour
         {
             GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
             elementAtPos.Occupier = GridOccupier.Pillar;
+            gridElementOccupierVisualiser.VisualisePillar(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y));
         }
+    }
+
+    private bool TryGetPillar(Vector2 pos, out Pillar pillar)
+    {
+        foreach(Pillar p in activePillars)
+        {
+            if (p.Position == pos)
+            {
+                pillar = p;
+                return true;
+            }
+        }
+        pillar = default(Pillar);
+        return false;
     }
     #endregion
 }

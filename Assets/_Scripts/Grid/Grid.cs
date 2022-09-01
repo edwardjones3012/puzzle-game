@@ -30,6 +30,11 @@ namespace edw.Grids
             return new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset;
         }
 
+        public Vector3 GetWorldPositionCentreGrid(int x, int y)
+        {
+            return (new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2;
+        }
+
         public void SetValue(int x, int y, T value)
         {
             if (x >= 0 && y >= 0 && x < gridOptions.width && y < gridOptions.height)

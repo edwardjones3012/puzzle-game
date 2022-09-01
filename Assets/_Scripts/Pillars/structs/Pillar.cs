@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace edw.Grids.Items
 {
-    public struct Pillar 
+    public class Pillar 
     {
         public Pillar(Vector2 Position, PillarType PillarType)
         {
