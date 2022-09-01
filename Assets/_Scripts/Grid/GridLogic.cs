@@ -1,6 +1,7 @@
 using edw.Grids;
 using edw.Grids.Items;
 using edw.Grids.Visuals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,7 +15,11 @@ public class GridLogic : MonoBehaviour
 
     List<Pillar> activePillars = new List<Pillar>();
 
-    [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
+    public Action<Vector3, Vector3> OnPlayerMoved;
+    public Action<Vector3, Vector3> OnPlayerInitialised;
+
+    public Action<Pillar, Vector3, Vector3> OnPillarMoved;
+    public Action<Pillar, Vector3> OnPillarInitialised;
 
     void Start()
     {
@@ -80,7 +85,7 @@ public class GridLogic : MonoBehaviour
     private void InitialisePlayer()
     {
         grid.GetValue((int)playerPos.x, (int)playerPos.y).Occupier = GridOccupier.Player;
-        gridElementOccupierVisualiser.VisualisePlayer(grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
+        OnPlayerInitialised.Invoke(playerPos, grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
     }
 
     private void DebugAllGridElements()
@@ -181,7 +186,7 @@ public class GridLogic : MonoBehaviour
         {
             playerPos = (Vector2)destPos;
         }
-        gridElementOccupierVisualiser.MovePlayerObject(grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
+        OnPlayerMoved.Invoke(playerPos, grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
     }
 
     void ShiftElements(List<GridElement> elements, MoveDirection moveDir)
@@ -207,8 +212,8 @@ public class GridLogic : MonoBehaviour
         {
             if (TryGetPillar(currentPos, out Pillar pillar))
             {
-                gridElementOccupierVisualiser.MovePillar(pillar, grid.GetWorldPositionCentreGrid((int)targetPos.x, (int)targetPos.y));
                 pillar.Position = targetPos;
+                OnPillarMoved.Invoke(pillar, targetPos, grid.GetWorldPositionCentreGrid((int)targetPos.x, (int)targetPos.y));
             }
         }
 
@@ -217,6 +222,7 @@ public class GridLogic : MonoBehaviour
         if (element.Occupier == GridOccupier.Player)
         {
             playerPos = targetPos;
+            Debug.Log("shifting player?!");
         }
 
         element.Occupier = GridOccupier.None;
@@ -328,7 +334,7 @@ public class GridLogic : MonoBehaviour
         {
             GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
             elementAtPos.Occupier = GridOccupier.Pillar;
-            gridElementOccupierVisualiser.VisualisePillar(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y));
+            OnPillarInitialised.Invoke(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y));
         }
     }
 
