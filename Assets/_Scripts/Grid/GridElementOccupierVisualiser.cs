@@ -1,3 +1,4 @@
+using DG.Tweening;
 using edw.Grids.Items;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,11 +33,11 @@ namespace edw.Grids.Visuals
 
         public void MovePillar(Pillar pillar, Vector3 destination)
         {
-            Vector3 heightAdjusted = new Vector3(destination.x, destination.y + 2.25f, destination.z);
+            Vector3 destinationWithYOffset = new Vector3(destination.x, destination.y + 2.25f, destination.z);
 
             GameObject instance = GetPillarInstance(pillar);
             if (instance == null) return;
-            instance.transform.position = heightAdjusted;
+            instance.transform.DOMove(destinationWithYOffset, .25f);
         }
 
         private GameObject GetPillarInstance(Pillar pillar)
@@ -70,8 +71,8 @@ namespace edw.Grids.Visuals
 
         public void MovePlayerObject(Vector3 destination)
         {
-            Vector3 heightAdjusted = new Vector3(destination.x, destination.y + 2.25f, destination.z);
-            playerInstance.transform.position = heightAdjusted;
+            Vector3 destinationWithYOffset = new Vector3(destination.x, destination.y + 2.25f, destination.z);
+            playerInstance.transform.DOMove(destinationWithYOffset, .25f);
         }
         #endregion
     }
