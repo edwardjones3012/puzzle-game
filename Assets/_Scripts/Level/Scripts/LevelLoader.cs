@@ -6,16 +6,21 @@ namespace edw.Grids.Levels
 {
     public class LevelLoader : MonoBehaviour
     {
-        public List<Level> Levels = new List<Level>();
+        public List<LevelSettings> LevelReference = new List<LevelSettings>();
+        List<Level> Levels = new List<Level>();
 
+        [SerializeField] GridLogic gridLogic;
         public void LoadLevel(int levelIndex)
         {
-            if (levelIndex > Levels.Count - 1 || levelIndex < 0)
+            if (levelIndex > LevelReference.Count - 1 || levelIndex < 0)
             {
                 Debug.LogError("Invalid level index!");
             }
 
-            Debug.Log("Loading level: " + Levels[levelIndex].LevelSettings.LevelName + "!");
+            LevelSettings levelSettings = LevelReference[levelIndex];
+            gridLogic.Init(levelSettings.GridOptions);
+
+            Debug.Log("Loading level: " + levelSettings.LevelName + "!");
         }
     }
 }

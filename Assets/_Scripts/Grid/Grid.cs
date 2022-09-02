@@ -3,13 +3,12 @@ namespace edw.Grids
 {
     public class Grid<T>
     {
-        GridOptions gridOptions;
-        
+        public GridOptions GridOptions { get; private set; }
         T[,] gridArray;
 
         public Grid(GridOptions gridOptions)
         {
-            this.gridOptions = gridOptions;
+            this.GridOptions = gridOptions;
 
             gridArray = new T[gridOptions.width, gridOptions.height];
 
@@ -27,17 +26,17 @@ namespace edw.Grids
 
         public Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset;
+            return new Vector3(x, 0, y) * GridOptions.cellSize + GridOptions.offset;
         }
 
         public Vector3 GetWorldPositionCentreGrid(int x, int y)
         {
-            return (new Vector3(x, 0, y) * gridOptions.cellSize + gridOptions.offset) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2;
+            return (new Vector3(x, 0, y) * GridOptions.cellSize + GridOptions.offset) + new Vector3(GridOptions.cellSize, 0, GridOptions.cellSize) / 2;
         }
 
         public void SetValue(int x, int y, T value)
         {
-            if (x >= 0 && y >= 0 && x < gridOptions.width && y < gridOptions.height)
+            if (x >= 0 && y >= 0 && x < GridOptions.width && y < GridOptions.height)
             {
                 gridArray[x, y] = value;
             }
@@ -45,7 +44,7 @@ namespace edw.Grids
 
         public T GetValue(int x, int y)
         {
-            if (x >= 0 && y >= 0 && x < gridOptions.width && y < gridOptions.height)
+            if (x >= 0 && y >= 0 && x < GridOptions.width && y < GridOptions.height)
             {
                 return gridArray[x, y];
             }

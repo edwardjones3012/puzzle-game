@@ -8,7 +8,6 @@ using UnityEngine;
 public class GridLogic : MonoBehaviour
 {
     Grid<GridElement> grid;
-    [SerializeField] GridOptions gridOptions;
 
     Vector2 playerPos = new Vector2(1, 0);
 
@@ -16,9 +15,9 @@ public class GridLogic : MonoBehaviour
 
     [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
 
-    void Start()
+    public void Init(GridOptions gridOptions)
     {
-        InitGrid();
+        InitGrid(gridOptions);
         SetGridEdgesPlayerExclusive();
         RegisterPillars();
     }
@@ -28,9 +27,10 @@ public class GridLogic : MonoBehaviour
     /// <summary>
     /// Creates a new grid and initialises it's elements.
     /// </summary>
-    private void InitGrid()
+    private void InitGrid(GridOptions gridOptions)
     {
         // gridOptions = new GridOptions(5, 5, 2, transform.position);
+        // this.gridOptions = gridOptions; 
         grid = new Grid<GridElement>(gridOptions);
         InitialiseGridElements();
         InitialisePlayer();
@@ -43,9 +43,9 @@ public class GridLogic : MonoBehaviour
     /// <param name="occupier"></param>
     private void InitialiseGridElements(GridElementType type = GridElementType.Default, GridOccupier occupier = GridOccupier.None)
     {
-        for (int x = 0; x < gridOptions.width; x++)
+        for (int x = 0; x < grid.GridOptions.width; x++)
         {
-            for (int y = 0; y < gridOptions.height; y++)
+            for (int y = 0; y < grid.GridOptions.height; y++)
             {
                 GridElement gridElement = new GridElement(type, occupier);
                 grid.SetValue(x, y, gridElement);
@@ -58,11 +58,14 @@ public class GridLogic : MonoBehaviour
     /// </summary>
     private void SetGridEdgesPlayerExclusive()
     {
-        for (int x = 0; x < gridOptions.width; x++)
+        int width = grid.GridOptions.width;
+        int height = grid.GridOptions.height;
+
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < gridOptions.height; y++)
+            for (int y = 0; y < height; y++)
             {
-                if (x == 0 || y == 0 || x == gridOptions.width - 1 || y == gridOptions.height - 1)
+                if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
                 {
                     GridElement currentGridElement = grid.GetValue(x, y);
                     currentGridElement.GridElementType = GridElementType.PlayerExclusive;
@@ -85,9 +88,12 @@ public class GridLogic : MonoBehaviour
 
     private void DebugAllGridElements()
     {
-        for (int x = 0; x < gridOptions.width; x++)
+        int width = grid.GridOptions.width;
+        int height = grid.GridOptions.height;
+
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < gridOptions.height; y++)
+            for (int y = 0; y < height; y++)
             {
                 Debug.Log(grid.GetValue(x, y).GridElementType);
             }
@@ -96,9 +102,12 @@ public class GridLogic : MonoBehaviour
 
     private void DebugOccupiedGridElements()
     {
-        for (int x = 0; x < gridOptions.width; x++)
+        int width = grid.GridOptions.width;
+        int height = grid.GridOptions.height;
+
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < gridOptions.height; y++)
+            for (int y = 0; y < height; y++)
             {
                 //if (grid.GetValue(x, y).Occupier != GridOccupier.None)
                 //{
@@ -106,11 +115,11 @@ public class GridLogic : MonoBehaviour
                 //}
                 if (grid.GetValue(x, y).Occupier == GridOccupier.Pillar)
                 {
-                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize,0,gridOptions.cellSize) /2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.blue, 1);
+                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(grid.GridOptions.cellSize,0, grid.GridOptions.cellSize) /2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(grid.GridOptions.cellSize, 0, grid.GridOptions.cellSize) / 2, Color.blue, 1);
                 }
                 if (grid.GetValue(x, y).Occupier == GridOccupier.Player)
                 {
-                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(gridOptions.cellSize, 0, gridOptions.cellSize) / 2, Color.red, 1);
+                    Debug.DrawLine(grid.GetWorldPosition(x, y) + new Vector3(grid.GridOptions.cellSize, 0, grid.GridOptions.cellSize) / 2, grid.GetWorldPosition(x, y) + (Vector3.up * 10) + new Vector3(grid.GridOptions.cellSize, 0, grid.GridOptions.cellSize) / 2, Color.red, 1);
                 }
             }
         }
@@ -123,9 +132,9 @@ public class GridLogic : MonoBehaviour
     /// <returns></returns>
     public Vector2? GetPosition(GridElement value)
     {
-        for (int x = 0; x < gridOptions.width; x++)
+        for (int x = 0; x < grid.GridOptions.width; x++)
         {
-            for (int y = 0; y < gridOptions.height; y++)
+            for (int y = 0; y < grid.GridOptions.height; y++)
             {
                 if (value == grid.GetValue(x, y))
                 {
@@ -280,7 +289,7 @@ public class GridLogic : MonoBehaviour
     {
         if (moveDir == MoveDirection.Up)
         {
-            return gridOptions.height - (int)start.y;
+            return grid.GridOptions.height - (int)start.y;
         }
         if (moveDir == MoveDirection.Down)
         {
@@ -292,7 +301,7 @@ public class GridLogic : MonoBehaviour
         }
         if (moveDir == MoveDirection.Right)
         {
-            return gridOptions.width - (int)start.x;
+            return grid.GridOptions.width - (int)start.x;
         }
         return -1;
     }
