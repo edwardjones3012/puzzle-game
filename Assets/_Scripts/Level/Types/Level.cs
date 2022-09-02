@@ -9,5 +9,9 @@ namespace edw.Grids.Levels
         public LevelSettings LevelSettings;
         public bool Completed;
         // todo: stats
+        public Level(LevelSettings levelSettings, bool completed = false)
+        {
+            LevelSettings = levelSettings;
+        }
     }
 }

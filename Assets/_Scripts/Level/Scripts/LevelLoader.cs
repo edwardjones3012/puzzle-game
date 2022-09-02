@@ -8,8 +8,23 @@ namespace edw.Grids.Levels
     {
         public List<LevelSettings> LevelReference = new List<LevelSettings>();
         List<Level> Levels = new List<Level>();
-
         [SerializeField] GridLogic gridLogic;
+        bool levelsInitialised;
+
+        void Start()
+        {
+            Init();
+        }
+
+        void Init()
+        {
+            foreach(LevelSettings levelSettings in LevelReference)
+            {
+                Levels.Add(new Level(levelSettings));
+            }
+            levelsInitialised = true;
+        }
+
         public void LoadLevel(int levelIndex)
         {
             if (levelIndex > LevelReference.Count - 1 || levelIndex < 0)
