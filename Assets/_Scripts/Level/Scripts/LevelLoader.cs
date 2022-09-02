@@ -18,7 +18,7 @@ namespace edw.Grids.Levels
             }
 
             LevelSettings levelSettings = LevelReference[levelIndex];
-            gridLogic.Init(levelSettings.GridOptions);
+            gridLogic.Init(levelSettings.GridOptions, levelSettings.StartingPositions);
 
             Debug.Log("Loading level: " + levelSettings.LevelName + "!");
         }

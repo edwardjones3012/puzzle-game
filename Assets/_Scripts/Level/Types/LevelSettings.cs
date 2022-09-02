@@ -1,3 +1,4 @@
+using edw.Grids.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,5 +12,6 @@ namespace edw.Grids.Levels
         public string Clue;
         public GridOptions GridOptions;
         public List<SolutionElement> Solution;
+        public List<PillarPosition> StartingPositions;
     }
 }

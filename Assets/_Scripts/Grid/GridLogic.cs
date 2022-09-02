@@ -15,11 +15,11 @@ public class GridLogic : MonoBehaviour
 
     [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
 
-    public void Init(GridOptions gridOptions)
+    public void Init(GridOptions gridOptions, List<PillarPosition> startingPositions)
     {
         InitGrid(gridOptions);
         SetGridEdgesPlayerExclusive();
-        RegisterPillars();
+        RegisterPillars(startingPositions);
     }
 
     #region Grid Setup
@@ -321,17 +321,23 @@ public class GridLogic : MonoBehaviour
     #endregion
     #region Pillars
 
-    void RegisterPillars()
+    void RegisterPillars(List<PillarPosition> startingPositions)
     {
         // to do: get positions dynamically
 
-        Pillar p1 = new Pillar(new Vector2(1, 3), PillarType.Red);
-        Pillar p2 = new Pillar(new Vector2(2, 1), PillarType.Green);
-        Pillar p3 = new Pillar(new Vector2(2, 2), PillarType.Blue);
+        foreach(PillarPosition pillarPosition in startingPositions)
+        {
+            Pillar p = new Pillar(pillarPosition.GridPosition, pillarPosition.PillarType);
+            activePillars.Add(p);
+        }
 
-        activePillars.Add(p1);
-        activePillars.Add(p2);
-        activePillars.Add(p3);
+        // Pillar p1 = new Pillar(new Vector2(1, 3), PillarType.Red);
+        // Pillar p2 = new Pillar(new Vector2(2, 1), PillarType.Green);
+        // Pillar p3 = new Pillar(new Vector2(2, 2), PillarType.Blue);
+
+        //activePillars.Add(p1);
+        //activePillars.Add(p2);
+        //activePillars.Add(p3);
 
         foreach(Pillar pillar in activePillars)
         {

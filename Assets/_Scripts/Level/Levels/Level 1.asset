@@ -29,3 +29,10 @@ MonoBehaviour:
   - RequireType: 0
     PillarType: 2
     GridPosition: {x: 3, y: 3}
+  StartingPositions:
+  - PillarType: 0
+    GridPosition: {x: 1, y: 0}
+  - PillarType: 1
+    GridPosition: {x: 2, y: 1}
+  - PillarType: 2
+    GridPosition: {x: 3, y: 0}
