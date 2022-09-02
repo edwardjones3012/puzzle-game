@@ -863,7 +863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b18e828e741634ba2d7a54db8bb517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridLogic: {fileID: 920268730}
   referencePillarObjects:
   - type: 0
     GameObject: {fileID: 7415818587765339523, guid: 7d5b791382f801b4e86d61128be2a17e, type: 3}

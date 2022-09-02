@@ -8,31 +8,19 @@ namespace edw.Grids.Visuals
     public class GridElementOccupierVisualiser : MonoBehaviour
     {
         [SerializeField]
-        GridLogic gridLogic;
-
-        [SerializeField]
         PillarTypeObject[] referencePillarObjects;
 
         private Dictionary<Pillar, GameObject> pillarObjectInstances = new Dictionary<Pillar, GameObject>();
 
-        [SerializeField]
+        [SerializeField] 
         GameObject referencePlayerObject;
         GameObject playerInstance;
         bool playerSpawned;
 
-        private void Start()
-        {
-            gridLogic.OnPillarMoved += MovePillar;
-            gridLogic.OnPillarInitialised += VisualisePillar;
-
-            gridLogic.OnPlayerMoved += MovePlayerObject;
-            gridLogic.OnPlayerInitialised += VisualisePlayer;
-        }
-
         #region Pillars
-        public void VisualisePillar(Pillar pillar, Vector3 worldPos)
+        public void VisualisePillar(Pillar pillar, Vector3 spawnPoint)
         {
-            Vector3 heightAdjusted = new Vector3(worldPos.x, worldPos.y + 2.25f, worldPos.z);
+            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
             if (pillarObjectInstances.ContainsKey(pillar))
             {
                 Debug.LogError("Cannot register pillar instance more than once!");
@@ -42,9 +30,9 @@ namespace edw.Grids.Visuals
             pillarObjectInstances.Add(pillar, obj);
         }
 
-        public void MovePillar(Pillar pillar, Vector3 gridPos, Vector3 worldPos)
+        public void MovePillar(Pillar pillar, Vector3 destination)
         {
-            Vector3 heightAdjusted = new Vector3(worldPos.x, worldPos.y + 2.25f, worldPos.z);
+            Vector3 heightAdjusted = new Vector3(destination.x, destination.y + 2.25f, destination.z);
 
             GameObject instance = GetPillarInstance(pillar);
             if (instance == null) return;
@@ -68,7 +56,7 @@ namespace edw.Grids.Visuals
         #endregion
 
         #region Player
-        public void VisualisePlayer(Vector3 gridPos, Vector3 worldPos)
+        public void VisualisePlayer(Vector3 spawnPoint)
         {
             if (playerSpawned)
             {
@@ -76,13 +64,13 @@ namespace edw.Grids.Visuals
                 return;
             }
             playerSpawned = true;
-            Vector3 heightAdjusted = new Vector3(worldPos.x, worldPos.y + 2.25f, worldPos.z);
+            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
             playerInstance = Instantiate(referencePlayerObject, heightAdjusted, Quaternion.identity);
         }
 
-        public void MovePlayerObject(Vector3 gridPos, Vector3 worldPos)
+        public void MovePlayerObject(Vector3 destination)
         {
-            Vector3 heightAdjusted = new Vector3(worldPos.x, worldPos.y + 2.25f, worldPos.z);
+            Vector3 heightAdjusted = new Vector3(destination.x, destination.y + 2.25f, destination.z);
             playerInstance.transform.position = heightAdjusted;
         }
         #endregion
