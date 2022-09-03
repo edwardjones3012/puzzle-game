@@ -18,6 +18,12 @@ namespace edw.Grids.Levels
 
         void Init()
         {
+            if (levelsInitialised)
+            {
+                Debug.LogWarning("Levels already initialised!");
+                return;
+            }
+
             foreach(LevelSettings levelSettings in LevelReference)
             {
                 Levels.Add(new Level(levelSettings));
