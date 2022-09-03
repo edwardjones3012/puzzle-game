@@ -47,6 +47,7 @@ public class SolutionWatcher : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 }

@@ -8,7 +8,7 @@ namespace edw.Grids
 
         public Grid(GridOptions gridOptions)
         {
-            this.GridOptions = gridOptions;
+            GridOptions = gridOptions;
 
             gridArray = new T[gridOptions.width, gridOptions.height];
 
