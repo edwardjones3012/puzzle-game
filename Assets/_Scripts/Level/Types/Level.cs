@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace edw.Grids.Levels
 {
-    public class Level : MonoBehaviour
+    public class Level
     {
         public LevelSettings LevelSettings;
         public bool Completed;

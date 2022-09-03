@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using edw.Singletons;
 
 namespace edw.Grids.Levels
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : SingletonMonoBehaviour<LevelManager, None>
     {
+        int currentLevelIndex;
+
         public LevelLoader LevelLoader;
         public SolutionWatcher SolutionWatcher;
 
@@ -14,5 +14,12 @@ namespace edw.Grids.Levels
             Level level = LevelLoader.LoadLevel(0);
             SolutionWatcher.SetActiveSolution(level.LevelSettings.Solution);
         }
+
+        public void LoadNextLevel()
+        {
+            Level level = LevelLoader.LoadLevel(++currentLevelIndex);
+            SolutionWatcher.SetActiveSolution(level.LevelSettings.Solution);
+        }
+
     }
 }

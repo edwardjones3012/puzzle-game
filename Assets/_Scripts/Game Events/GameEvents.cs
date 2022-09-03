@@ -1,4 +1,5 @@
 using edw.Grids.Items;
+using edw.Grids.Levels;
 using edw.Singletons;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace edw.Events
         public GameEvent<int> ExampleEvent = new GameEvent<int>();
 
         public GameEvent<List<Pillar>> PillarLayoutChanged = new GameEvent<List<Pillar>>();
+        public GameEvent CorrectConfigurationMade = new GameEvent();
+        public GameEvent<Level> ChangeLevel = new GameEvent<Level>();
     }
 
     [Serializable]

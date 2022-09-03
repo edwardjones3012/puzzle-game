@@ -1,3 +1,4 @@
+using edw.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ namespace edw.Grids.Levels
     {
         public List<LevelSettings> LevelReference = new List<LevelSettings>();
         List<Level> Levels = new List<Level>();
-        [SerializeField] GridLogic gridLogic;
-        bool levelsInitialised;
+        // [SerializeField] GridLogic gridLogic;
+        bool levelsInitialised { get { return Levels.Count > 0; } set { } }
 
         void Start()
         {
@@ -39,10 +40,10 @@ namespace edw.Grids.Levels
             }
 
             LevelSettings levelSettings = LevelReference[levelIndex];
-            gridLogic.Init(levelSettings.GridOptions, levelSettings.StartingPositions);
+            // gridLogic.Init(levelSettings.GridOptions, levelSettings.StartingPositions);
+            GameEvents.Instance.ChangeLevel.Invoke(GetLevel(levelSettings));
 
             Debug.Log("Loading level: " + levelSettings.LevelName + "!");
-
             return GetLevel(levelSettings);
         }
 

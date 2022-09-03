@@ -1,6 +1,7 @@
 using edw.Events;
 using edw.Grids;
 using edw.Grids.Items;
+using edw.Grids.Levels;
 using edw.Grids.Visuals;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +11,32 @@ public class GridLogic : MonoBehaviour
 {
     Grid<GridElement> grid;
 
-    Vector2 playerPos = new Vector2(1, 0);
+    Vector2 playerPos = new Vector2(2, 0);
 
     List<Pillar> activePillars = new List<Pillar>();
 
     [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
 
+    private void Start()
+    {
+        GameEvents.Instance.ChangeLevel.AddDelegate(OnChangeLevel);
+    }
+
+    #region Grid Setup
     public void Init(GridOptions gridOptions, List<PillarPosition> startingPositions)
     {
+        ResetStates();
         InitGrid(gridOptions);
         SetGridEdgesPlayerExclusive();
         RegisterPillars(startingPositions);
     }
 
-    #region Grid Setup
+    private void ResetStates()
+    {
+        gridElementOccupierVisualiser.ResetVisuals();
+        activePillars = new List<Pillar>();
+        playerPos = new Vector2(2, 0);
+    }
 
     /// <summary>
     /// Creates a new grid and initialises it's elements.
@@ -331,21 +344,11 @@ public class GridLogic : MonoBehaviour
 
     void RegisterPillars(List<PillarPosition> startingPositions)
     {
-        // to do: get positions dynamically
-
         foreach(PillarPosition pillarPosition in startingPositions)
         {
             Pillar p = new Pillar(pillarPosition.GridPosition, pillarPosition.PillarType);
             activePillars.Add(p);
         }
-
-        // Pillar p1 = new Pillar(new Vector2(1, 3), PillarType.Red);
-        // Pillar p2 = new Pillar(new Vector2(2, 1), PillarType.Green);
-        // Pillar p3 = new Pillar(new Vector2(2, 2), PillarType.Blue);
-
-        //activePillars.Add(p1);
-        //activePillars.Add(p2);
-        //activePillars.Add(p3);
 
         foreach(Pillar pillar in activePillars)
         {
@@ -368,5 +371,14 @@ public class GridLogic : MonoBehaviour
         pillar = default(Pillar);
         return false;
     }
+    #endregion
+
+    #region Event Handlers
+
+    private void OnChangeLevel(Level level)
+    {
+        Init(level.LevelSettings.GridOptions, level.LevelSettings.StartingPositions);
+    }
+
     #endregion
 }

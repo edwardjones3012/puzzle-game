@@ -21,7 +21,10 @@ public class SolutionWatcher : MonoBehaviour
 
     private void OnPillarMoved(List<Pillar> pillars)
     {
-        Debug.Log(ValidatePillarConfiguration(pillars));
+        if (ValidatePillarConfiguration(pillars))
+        {
+            GameEvents.Instance.CorrectConfigurationMade.Invoke();
+        }
     }
 
     private bool ValidatePillarConfiguration(List<Pillar> pillars)
