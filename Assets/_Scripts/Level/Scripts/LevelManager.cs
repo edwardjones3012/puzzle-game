@@ -7,10 +7,12 @@ namespace edw.Grids.Levels
     public class LevelManager : MonoBehaviour
     {
         public LevelLoader LevelLoader;
+        public SolutionWatcher SolutionWatcher;
 
         void Start()
         {
-            LevelLoader.LoadLevel(0);
+            Level level = LevelLoader.LoadLevel(0);
+            SolutionWatcher.SetActiveSolution(level.LevelSettings.Solution);
         }
     }
 }

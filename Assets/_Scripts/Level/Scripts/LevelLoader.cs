@@ -31,7 +31,7 @@ namespace edw.Grids.Levels
             levelsInitialised = true;
         }
 
-        public void LoadLevel(int levelIndex)
+        public Level LoadLevel(int levelIndex)
         {
             if (levelIndex > LevelReference.Count - 1 || levelIndex < 0)
             {
@@ -42,6 +42,17 @@ namespace edw.Grids.Levels
             gridLogic.Init(levelSettings.GridOptions, levelSettings.StartingPositions);
 
             Debug.Log("Loading level: " + levelSettings.LevelName + "!");
+
+            return GetLevel(levelSettings);
+        }
+
+        private Level GetLevel(LevelSettings reference)
+        {
+            foreach(Level level in Levels)
+            {
+                if (level.LevelSettings == reference) return level;
+            }
+            return null;
         }
     }
 }

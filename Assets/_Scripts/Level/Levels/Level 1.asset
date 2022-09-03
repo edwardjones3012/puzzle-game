@@ -20,19 +20,19 @@ MonoBehaviour:
     cellSize: 2
     offset: {x: -5, y: 0, z: -7.5}
   Solution:
-  - RequireType: 0
+  - RequireType: 1
     PillarType: 0
     GridPosition: {x: 1, y: 3}
-  - RequireType: 0
+  - RequireType: 1
     PillarType: 1
     GridPosition: {x: 2, y: 3}
-  - RequireType: 0
+  - RequireType: 1
     PillarType: 2
     GridPosition: {x: 3, y: 3}
   StartingPositions:
   - PillarType: 0
-    GridPosition: {x: 1, y: 0}
+    GridPosition: {x: 1, y: 1}
   - PillarType: 1
-    GridPosition: {x: 2, y: 1}
+    GridPosition: {x: 2, y: 2}
   - PillarType: 2
-    GridPosition: {x: 3, y: 0}
+    GridPosition: {x: 3, y: 1}

@@ -1,3 +1,4 @@
+using edw.Events;
 using edw.Grids;
 using edw.Grids.Items;
 using edw.Grids.Visuals;
@@ -190,6 +191,7 @@ public class GridLogic : MonoBehaviour
         {
             playerPos = (Vector2)destPos;
         }
+        
         gridElementOccupierVisualiser.MovePlayerObject(grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
     }
 
@@ -216,8 +218,7 @@ public class GridLogic : MonoBehaviour
         {
             if (TryGetPillar(currentPos, out Pillar pillar))
             {
-                gridElementOccupierVisualiser.MovePillar(pillar, grid.GetWorldPositionCentreGrid((int)targetPos.x, (int)targetPos.y));
-                pillar.Position = targetPos;
+                MovePillar(pillar, targetPos);
             }
         }
 
@@ -229,6 +230,13 @@ public class GridLogic : MonoBehaviour
         }
 
         element.Occupier = GridOccupier.None;
+    }
+
+    private void MovePillar(Pillar pillar, Vector2 targetPos)
+    {
+        gridElementOccupierVisualiser.MovePillar(pillar, grid.GetWorldPositionCentreGrid((int)targetPos.x, (int)targetPos.y));
+        pillar.Position = targetPos;
+        GameEvents.Instance.PillarLayoutChanged.Invoke(activePillars);
     }
 
     private List<GridElement> GetAllGridElementsUntilUnoccupied(MoveDirection moveDir, Vector2 start)

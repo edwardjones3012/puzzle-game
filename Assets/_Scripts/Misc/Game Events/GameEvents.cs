@@ -1,5 +1,7 @@
+using edw.Grids.Items;
 using edw.Singletons;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace edw.Events
@@ -13,7 +15,7 @@ namespace edw.Events
 
         public GameEvent<int> ExampleEvent = new GameEvent<int>();
 
-        public GameEvent PillarMoved = new GameEvent();
+        public GameEvent<List<Pillar>> PillarLayoutChanged = new GameEvent<List<Pillar>>();
     }
 
     [Serializable]
