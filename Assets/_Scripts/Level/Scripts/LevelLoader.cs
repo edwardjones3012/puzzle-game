@@ -55,5 +55,10 @@ namespace edw.Grids.Levels
             }
             return null;
         }
+
+        public Level GetLevel(int index)
+        {
+            return Levels[index];
+        }
     }
 }

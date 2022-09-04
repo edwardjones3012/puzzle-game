@@ -17,9 +17,14 @@ namespace edw.Grids.Levels
 
         public void LoadNextLevel()
         {
+            if (currentLevelIndex == LevelLoader.LevelReference.Count - 1) return;
             Level level = LevelLoader.LoadLevel(++currentLevelIndex);
             SolutionWatcher.SetActiveSolution(level.LevelSettings.Solution);
         }
 
+        public Level GetCurrentLevel()
+        {
+            return LevelLoader.GetLevel(currentLevelIndex);
+        }
     }
 }
