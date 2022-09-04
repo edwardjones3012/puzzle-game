@@ -4,11 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text clueText;
     [SerializeField] private GameObject nextLevelButton;
+    [SerializeField] private GameObject returnToMenuButton;
 
     void Start()
     {
@@ -18,7 +20,14 @@ public class MainUI : MonoBehaviour
 
     private void OnLevelComplete()
     {
-        nextLevelButton.SetActive(true);
+        if (LevelManager.Instance.GetProgressionAction() == ProgressionAction.NextLevel)
+        {
+            nextLevelButton.SetActive(true);
+        }
+        if (LevelManager.Instance.GetProgressionAction() == ProgressionAction.ReturnToMenu)
+        {
+            returnToMenuButton.SetActive(true);
+        }
     }
 
     private void OnChangeLevel(Level level)
@@ -30,5 +39,11 @@ public class MainUI : MonoBehaviour
     {
         LevelManager.Instance.LoadNextLevel();
         nextLevelButton.SetActive(false);
+    }
+
+    public void OnGoToMainMenuButtonClicked()
+    {
+        SceneManager.LoadScene(0);
+        returnToMenuButton.SetActive(false);
     }
 }

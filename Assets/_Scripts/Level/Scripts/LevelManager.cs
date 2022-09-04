@@ -26,5 +26,20 @@ namespace edw.Grids.Levels
         {
             return LevelLoader.GetLevel(currentLevelIndex);
         }
+
+        public ProgressionAction GetProgressionAction()
+        {
+            if (currentLevelIndex == LevelLoader.LevelReference.Count - 1)
+            {
+                return ProgressionAction.ReturnToMenu;
+            }
+            return ProgressionAction.NextLevel;
+        }
+    }
+
+    public enum ProgressionAction
+    {
+        NextLevel,
+        ReturnToMenu
     }
 }
