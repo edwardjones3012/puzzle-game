@@ -17,9 +17,14 @@ public class GridLogic : MonoBehaviour
 
     [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
 
-    private void Start()
+    private void OnEnable()
     {
         GameEvents.Instance.ChangeLevel.AddDelegate(OnChangeLevel);
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.Instance.ChangeLevel.RemoveDelegate(OnChangeLevel);
     }
 
     #region Grid Setup
@@ -355,6 +360,7 @@ public class GridLogic : MonoBehaviour
             GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
             elementAtPos.Occupier = GridOccupier.Pillar;
             gridElementOccupierVisualiser.VisualisePillar(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y));
+            // Debug.Log("Spawning " + pillar.PillarType);
         }
     }
 

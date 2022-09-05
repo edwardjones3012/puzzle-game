@@ -1627,8 +1627,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelReference:
   - {fileID: 11400000, guid: 5279fc3d97631094eb8c608ada0c599b, type: 2}
-  - {fileID: 11400000, guid: 40f846c0473af8241bf92bda1913b5dc, type: 2}
-  - {fileID: 11400000, guid: 35982b436caad1a4ab57627d08895ed4, type: 2}
 --- !u!114 &1820793419
 MonoBehaviour:
   m_ObjectHideFlags: 0

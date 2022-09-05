@@ -2,6 +2,7 @@ using edw.Events;
 using edw.Grids.Levels;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,10 +13,16 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject nextLevelButton;
     [SerializeField] private GameObject returnToMenuButton;
 
-    void Start()
+    void OnEnable()
     {
         GameEvents.Instance.ChangeLevel.AddDelegate(OnChangeLevel);
         GameEvents.Instance.CorrectConfigurationMade.AddDelegate(OnLevelComplete);
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.Instance.ChangeLevel.RemoveDelegate(OnChangeLevel);
+        GameEvents.Instance.CorrectConfigurationMade.RemoveDelegate(OnLevelComplete);
     }
 
     private void OnLevelComplete()

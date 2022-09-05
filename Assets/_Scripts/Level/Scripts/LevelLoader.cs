@@ -43,7 +43,6 @@ namespace edw.Grids.Levels
             // gridLogic.Init(levelSettings.GridOptions, levelSettings.StartingPositions);
             GameEvents.Instance.ChangeLevel.Invoke(GetLevel(levelSettings));
 
-            Debug.Log("Loading level: " + levelSettings.LevelName + "!");
             return GetLevel(levelSettings);
         }
 

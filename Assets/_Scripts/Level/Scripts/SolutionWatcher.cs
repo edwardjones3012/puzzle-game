@@ -14,9 +14,14 @@ public class SolutionWatcher : MonoBehaviour
         this.activeSolution = activeSolution;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         GameEvents.Instance.PillarLayoutChanged.AddDelegate(OnPillarMoved);
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.Instance.PillarLayoutChanged.RemoveDelegate(OnPillarMoved);
     }
 
     private void OnPillarMoved(List<Pillar> pillars)
