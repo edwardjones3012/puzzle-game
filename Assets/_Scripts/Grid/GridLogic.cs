@@ -216,6 +216,12 @@ public class GridLogic : MonoBehaviour
         gridElementOccupierVisualiser.MovePlayerObject(grid.GetWorldPositionCentreGrid((int)playerPos.x, (int)playerPos.y));
     }
 
+    private IEnumerator AllowPlayerMove(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canMove = true;
+    }
+
     void ShiftElements(List<GridElement> elements, MoveDirection moveDir)
     {
         for (int i = elements.Count - 1; i >= 0; i--)
@@ -357,13 +363,6 @@ public class GridLogic : MonoBehaviour
             Pillar p = new Pillar(pillarPosition.GridPosition, pillarPosition.PillarType);
             activePillars.Add(p);
         }
-        //foreach (Pillar pillar in activePillars)
-        //{
-        //    GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
-        //    elementAtPos.Occupier = GridOccupier.Pillar;
-        //    gridElementOccupierVisualiser.VisualisePillar(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y), true, i / 2);
-        //    // Debug.Log("Spawning " + pillar.PillarType);
-        //}
         float delayMultiplier = .2f;
         for (int i = 0; i < activePillars.Count; i++)
         {
@@ -372,12 +371,6 @@ public class GridLogic : MonoBehaviour
             gridElementOccupierVisualiser.VisualisePillar(activePillars[i], grid.GetWorldPositionCentreGrid((int)activePillars[i].Position.x, (int)activePillars[i].Position.y), true, (i + 1) * delayMultiplier);
         }
         StartCoroutine(AllowPlayerMove((activePillars.Count + 1) * delayMultiplier));
-    }
-
-    private IEnumerator AllowPlayerMove(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        canMove = true;
     }
 
     private bool TryGetPillar(Vector2 pos, out Pillar pillar)
