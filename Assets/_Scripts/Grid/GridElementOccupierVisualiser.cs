@@ -22,7 +22,7 @@ namespace edw.Grids.Visuals
         bool playerSpawned { get { return playerInstance != null; } }
 
         #region Pillars
-        public void VisualisePillar(Pillar pillar, Vector3 spawnPoint)
+        public void VisualisePillar(Pillar pillar, Vector3 spawnPoint, bool animateIn = true, float delay = 0)
         {
             Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
             if (pillarObjectInstances.ContainsKey(pillar))
@@ -30,8 +30,17 @@ namespace edw.Grids.Visuals
                 Debug.LogError("Cannot register pillar instance more than once!");
                 return;
             }
-            GameObject obj = Instantiate(GetPillarToInstantiate(pillar.PillarType), heightAdjusted, Quaternion.identity);
-            pillarObjectInstances.Add(pillar, obj);
+            if (animateIn)
+            {
+                GameObject obj = Instantiate(GetPillarToInstantiate(pillar.PillarType), heightAdjusted + new Vector3(0, 25, 0), Quaternion.identity);
+                pillarObjectInstances.Add(pillar, obj);
+                StartCoroutine(AnimateObjectInFromAbove(obj, heightAdjusted, delay));
+            }
+            else
+            {
+                GameObject obj = Instantiate(GetPillarToInstantiate(pillar.PillarType), heightAdjusted, Quaternion.identity);
+                pillarObjectInstances.Add(pillar, obj);
+            }
         }
 
         public void MovePillar(Pillar pillar, Vector3 destination)
@@ -81,7 +90,7 @@ namespace edw.Grids.Visuals
         #endregion
 
         #region Player
-        public void VisualisePlayer(Vector3 spawnPoint)
+        public void VisualisePlayer(Vector3 spawnPoint, bool animateIn = true, float animationTime = 1.25f, float delay = 0)
         {
             if (playerSpawned)
             {
@@ -89,7 +98,24 @@ namespace edw.Grids.Visuals
                 return;
             }
             Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
-            playerInstance = Instantiate(referencePlayerObject, heightAdjusted, Quaternion.identity);
+            if (animateIn)
+            {
+                playerInstance = Instantiate(referencePlayerObject, heightAdjusted + Vector3.up * 25, Quaternion.identity);
+                StartCoroutine(AnimateObjectInFromAbove(playerInstance, heightAdjusted, delay));
+                // playerInstance.transform.DOMove(heightAdjusted, .5f);
+                // playerInstance.transform.DORotate(new Vector3(0, 270, 0), .5f, RotateMode.LocalAxisAdd);
+            }
+            else
+            {
+                playerInstance = Instantiate(referencePlayerObject, heightAdjusted, Quaternion.identity);
+            }
+        }
+
+        private IEnumerator AnimateObjectInFromAbove(GameObject obj, Vector3 destination, float animationTime, float delay = 0)
+        {
+            if (delay > 0) yield return new WaitForSeconds(delay);
+            obj.transform.DOMove(destination, animationTime);
+            obj.transform.DORotate(new Vector3(0, 90, 0), animationTime, RotateMode.LocalAxisAdd);
         }
 
         public void MovePlayerObject(Vector3 destination)

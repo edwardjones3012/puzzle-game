@@ -3,6 +3,7 @@ using edw.Grids;
 using edw.Grids.Items;
 using edw.Grids.Levels;
 using edw.Grids.Visuals;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class GridLogic : MonoBehaviour
     List<Pillar> activePillars = new List<Pillar>();
 
     [SerializeField] GridElementOccupierVisualiser gridElementOccupierVisualiser;
+    private bool canMove;
 
     private void OnEnable()
     {
@@ -179,6 +181,7 @@ public class GridLogic : MonoBehaviour
 
     private void TryMove(MoveDirection moveDir)
     {
+        if (!canMove) return;
         List<GridElement> elementsInDir = GetAllGridElementsUntilUnoccupied(moveDir, playerPos);
         if (elementsInDir.Count > 0)
         {
@@ -349,19 +352,32 @@ public class GridLogic : MonoBehaviour
 
     void RegisterPillars(List<PillarPosition> startingPositions)
     {
-        foreach(PillarPosition pillarPosition in startingPositions)
+        foreach (PillarPosition pillarPosition in startingPositions)
         {
             Pillar p = new Pillar(pillarPosition.GridPosition, pillarPosition.PillarType);
             activePillars.Add(p);
         }
-
-        foreach(Pillar pillar in activePillars)
+        //foreach (Pillar pillar in activePillars)
+        //{
+        //    GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
+        //    elementAtPos.Occupier = GridOccupier.Pillar;
+        //    gridElementOccupierVisualiser.VisualisePillar(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y), true, i / 2);
+        //    // Debug.Log("Spawning " + pillar.PillarType);
+        //}
+        float delayMultiplier = .2f;
+        for (int i = 0; i < activePillars.Count; i++)
         {
-            GridElement elementAtPos = grid.GetValue((int)pillar.Position.x, (int)pillar.Position.y);
+            GridElement elementAtPos = grid.GetValue((int)activePillars[i].Position.x, (int)activePillars[i].Position.y);
             elementAtPos.Occupier = GridOccupier.Pillar;
-            gridElementOccupierVisualiser.VisualisePillar(pillar, grid.GetWorldPositionCentreGrid((int)pillar.Position.x, (int)pillar.Position.y));
-            // Debug.Log("Spawning " + pillar.PillarType);
+            gridElementOccupierVisualiser.VisualisePillar(activePillars[i], grid.GetWorldPositionCentreGrid((int)activePillars[i].Position.x, (int)activePillars[i].Position.y), true, (i + 1) * delayMultiplier);
         }
+        StartCoroutine(AllowPlayerMove((activePillars.Count + 1) * delayMultiplier));
+    }
+
+    private IEnumerator AllowPlayerMove(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canMove = true;
     }
 
     private bool TryGetPillar(Vector2 pos, out Pillar pillar)
