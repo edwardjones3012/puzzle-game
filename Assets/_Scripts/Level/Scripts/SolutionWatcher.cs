@@ -16,16 +16,22 @@ public class SolutionWatcher : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.Instance.PillarLayoutChanged.AddDelegate(OnPillarMoved);
+        GameEvents.Instance.PillarLayoutChanged.AddDelegate(OnPillarLayoutChanged);
     }
 
     private void OnDisable()
     {
-        GameEvents.Instance.PillarLayoutChanged.RemoveDelegate(OnPillarMoved);
+        GameEvents.Instance.PillarLayoutChanged.RemoveDelegate(OnPillarLayoutChanged);
     }
 
-    private void OnPillarMoved(List<Pillar> pillars)
+    private void OnPillarLayoutChanged(List<Pillar> pillars)
     {
+        StartCoroutine(ValidateForSolution(pillars));
+    }
+
+    private IEnumerator ValidateForSolution(List<Pillar> pillars)
+    {
+        yield return new WaitForEndOfFrame();
         if (ValidatePillarConfiguration(pillars))
         {
             GameEvents.Instance.CorrectConfigurationMade.Invoke();

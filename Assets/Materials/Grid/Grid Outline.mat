@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pseudo-lit Dark
-  m_Shader: {fileID: 4800000, guid: f24b68e9b6f2e30428c3c7f7aea20e9e, type: 3}
+  m_Name: Grid Outline
+  m_Shader: {fileID: 4800000, guid: 44fcc9d6228b6a042972fce90f4667a9, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -24,10 +24,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
+    m_Ints:
+    - _Columns: 5
+    - _LightIntensity: 13
+    - _Rows: 5
     m_Floats:
-    - _AmbientLight: 0.7
-    - _LightIntensity: 1
+    - _Columns: 5
+    - _LightIntensity: 2.43
+    - _Rows: 5
     m_Colors:
-    - _Color: {r: 0.9490196, g: 0.83137256, b: 0.6313726, a: 1}
+    - _Color: {r: 1, g: 0.94228107, b: 0.8349056, a: 1}
   m_BuildTextureStacks: []

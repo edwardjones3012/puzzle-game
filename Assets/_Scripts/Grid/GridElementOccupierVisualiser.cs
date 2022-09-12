@@ -24,7 +24,7 @@ namespace edw.Grids.Visuals
         #region Pillars
         public void VisualisePillar(Pillar pillar, Vector3 spawnPoint, bool animateIn = true, float delay = 0)
         {
-            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
+            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 1.25f, spawnPoint.z);
             if (pillarObjectInstances.ContainsKey(pillar))
             {
                 Debug.LogError("Cannot register pillar instance more than once!");
@@ -45,7 +45,7 @@ namespace edw.Grids.Visuals
 
         public void MovePillar(Pillar pillar, Vector3 destination)
         {
-            Vector3 destinationWithYOffset = new Vector3(destination.x, destination.y + 2.25f, destination.z);
+            Vector3 destinationWithYOffset = new Vector3(destination.x, destination.y + 1.25f, destination.z);
 
             GameObject instance = GetPillarInstance(pillar);
             if (instance == null) return;
@@ -97,7 +97,7 @@ namespace edw.Grids.Visuals
                 Debug.LogError("Cannot register player instance more than once!");
                 return;
             }
-            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 2.25f, spawnPoint.z);
+            Vector3 heightAdjusted = new Vector3(spawnPoint.x, spawnPoint.y + 1.25f, spawnPoint.z);
             if (animateIn)
             {
                 playerInstance = Instantiate(referencePlayerObject, heightAdjusted + Vector3.up * 25, Quaternion.identity);
@@ -120,7 +120,7 @@ namespace edw.Grids.Visuals
 
         public void MovePlayerObject(Vector3 destination)
         {
-            Vector3 destinationWithYOffset = new Vector3(destination.x, destination.y + 2.25f, destination.z);
+            Vector3 destinationWithYOffset = new Vector3(destination.x, destination.y + 1.25f, destination.z);
             playerInstance.transform.DOMove(destinationWithYOffset, .25f);
         }
         #endregion
