@@ -1,6 +1,6 @@
 # Isometric Puzzle Game
 
-This repository contains a prototype for an isometric puzzle game with custom shaders and a grid system. The game is designed to challenge players' problem-solving skills by presenting them with a riddle, the solution to which is the configuration of elements on board.
+This repository contains a **prototype** for an isometric puzzle game with custom shaders and a grid system. The game is designed to challenge players' problem-solving skills by presenting them with a riddle, the solution to which is the configuration of elements on board.
 
 ![Puzzle Game Preview](./puzzle-game-preview-1.png)
 
